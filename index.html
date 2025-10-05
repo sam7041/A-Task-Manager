@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TaskMaster - Your Modern To-Do App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="TaskMaster - A beautiful, modern to-do application with notifications">
+    <meta name="theme-color" content="#6c5ce7">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-check-circle"></i> TaskMaster</h1>
+            <p>Organize your tasks, simplify your life</p>
+        </header>
+
+        <div class="todo-app">
+            <div class="add-task">
+                <div class="task-input-container">
+                    <input type="text" id="task-input" placeholder="Add a new task...">
+                    <div class="task-options">
+                        <input type="datetime-local" id="due-date-input" title="Set due date and time">
+                        <button id="notification-settings" title="Notification settings"><i class="fas fa-bell"></i></button>
+                    </div>
+                </div>
+                <button id="add-button" title="Add task"><i class="fas fa-plus"></i></button>
+            </div>
+
+            <div class="filters">
+                <div class="filter active" data-filter="all">All</div>
+                <div class="filter" data-filter="active">Active</div>
+                <div class="filter" data-filter="completed">Completed</div>
+                <div class="filter" data-filter="upcoming">Upcoming</div>
+            </div>
+
+            <ul id="task-list">
+                <!-- Tasks will be added here dynamically -->
+            </ul>
+
+            <div class="task-stats">
+                <span id="tasks-counter">0 tasks left</span>
+                <button id="clear-completed">Clear Completed</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Settings Modal -->
+    <div id="notification-modal" class="modal" role="dialog" aria-labelledby="notification-settings-title">
+        <div class="modal-content">
+            <span class="close-modal" aria-label="Close">&times;</span>
+            <h2 id="notification-settings-title">Notification Settings</h2>
+            
+            <div class="settings-section">
+                <h3>Notifications</h3>
+                <div class="notification-option">
+                    <input type="checkbox" id="enable-notifications" checked>
+                    <label for="enable-notifications">Enable browser notifications</label>
+                </div>
+                <div class="notification-option">
+                    <label for="notification-time">Default reminder time:</label>
+                    <select id="notification-time">
+                        <option value="0">At due time</option>
+                        <option value="5">5 minutes before</option>
+                        <option value="15">15 minutes before</option>
+                        <option value="30">30 minutes before</option>
+                        <option value="60">1 hour before</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Sound</h3>
+                <div class="notification-option">
+                    <input type="checkbox" id="enable-sound" checked>
+                    <label for="enable-sound">Play sound when task is due</label>
+                </div>
+                <div class="notification-option volume-control">
+                    <label for="sound-volume">Volume:</label>
+                    <input type="range" id="sound-volume" min="0" max="100" value="70">
+                    <button id="sound-preview" title="Preview sound"><i class="fas fa-play"></i></button>
+                </div>
+            </div>
+            
+            <button id="save-notification-settings">Save Settings</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>Drag and drop to reorder tasks • Double-click to edit</p>
+        <p class="creator">Created with ❤️ by Sameer Shukla</p>
+    </footer>
+
+    <noscript>
+        <div class="noscript-message">
+            This application requires JavaScript to function. Please enable JavaScript in your browser settings.
+        </div>
+    </noscript>
+
+    <script src="script.js"></script>
+</body>
+</html> 

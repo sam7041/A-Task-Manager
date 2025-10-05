@@ -1,0 +1,584 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --primary-color: #6c5ce7;
+    --secondary-color: #a29bfe;
+    --text-color: #2d3436;
+    --light-text: #636e72;
+    --background-color: #f9f9f9;
+    --card-background: #ffffff;
+    --border-color: #dfe6e9;
+    --completed-color: #00b894;
+    --delete-color: #d63031;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --notification-color: #fdcb6e;
+    --modal-overlay: rgba(0, 0, 0, 0.5);
+    --error-color: #ff7675;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    line-height: 1.5;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+header p {
+    color: var(--light-text);
+    font-size: 1rem;
+}
+
+.todo-app {
+    background-color: var(--card-background);
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.add-task {
+    display: flex;
+    margin-bottom: 25px;
+}
+
+.task-input-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    border-radius: 8px 0 0 8px;
+    overflow: hidden;
+}
+
+#task-input {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.3s;
+}
+
+.task-options {
+    display: flex;
+    background-color: rgba(108, 92, 231, 0.05);
+    padding: 8px;
+    border-top: 1px solid var(--border-color);
+}
+
+#due-date-input {
+    border: none;
+    background: none;
+    color: var(--text-color);
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 0 8px;
+    flex: 1;
+}
+
+#notification-settings {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 0 8px;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+#notification-settings:hover {
+    color: var(--notification-color);
+}
+
+#add-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    padding: 0 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#add-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter {
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.filter:hover {
+    background-color: rgba(108, 92, 231, 0.1);
+}
+
+.filter.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+#task-list {
+    list-style: none;
+    margin-bottom: 25px;
+    min-height: 50px;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.task-item:last-child {
+    border-bottom: none;
+}
+
+.task-checkbox {
+    margin-right: 15px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+
+.task-checkbox:checked {
+    background-color: var(--completed-color);
+    border-color: var(--completed-color);
+}
+
+.task-checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    color: white;
+    font-size: 14px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.task-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.task-text {
+    font-size: 1rem;
+    transition: all 0.3s;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.task-due-date {
+    font-size: 0.8rem;
+    color: var(--light-text);
+    margin-top: 4px;
+}
+
+.task-due-date.upcoming {
+    color: var(--notification-color);
+}
+
+.task-due-date.overdue {
+    color: var(--delete-color);
+}
+
+.task-item.completed .task-text {
+    text-decoration: line-through;
+    color: var(--light-text);
+}
+
+.task-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.edit-btn, .delete-btn, .notification-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+    padding: 5px;
+}
+
+.edit-btn:hover, .delete-btn:hover, .notification-btn:hover {
+    opacity: 1;
+}
+
+.edit-btn {
+    color: var(--primary-color);
+}
+
+.delete-btn {
+    color: var(--delete-color);
+}
+
+.notification-btn {
+    color: var(--notification-color);
+}
+
+.notification-btn.active {
+    opacity: 1;
+}
+
+.task-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--light-text);
+}
+
+#clear-completed {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+#clear-completed:hover {
+    color: var(--delete-color);
+}
+
+footer {
+    margin-top: auto;
+    text-align: center;
+    color: var(--light-text);
+    font-size: 0.8rem;
+    padding: 20px 0;
+}
+
+.task-item.dragging {
+    opacity: 0.5;
+    background-color: rgba(108, 92, 231, 0.05);
+}
+
+.editable {
+    border: 1px dashed var(--primary-color);
+    padding: 5px;
+    border-radius: 4px;
+    outline: none;
+    min-width: 50px;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--modal-overlay);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--card-background);
+    border-radius: 15px;
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: var(--shadow);
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--light-text);
+    transition: color 0.3s;
+}
+
+.close-modal:hover {
+    color: var(--delete-color);
+}
+
+.modal h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.notification-option {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.notification-option label {
+    margin-left: 10px;
+    flex: 1;
+}
+
+#notification-time {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: white;
+}
+
+#save-notification-settings {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    width: 100%;
+}
+
+#save-notification-settings:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--card-background);
+    color: var(--text-color);
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    z-index: 1001;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s;
+    max-width: 90%;
+}
+
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.toast-icon {
+    margin-right: 10px;
+    font-size: 1.2rem;
+    color: var(--notification-color);
+    flex-shrink: 0;
+}
+
+.toast-close {
+    margin-left: 15px;
+    cursor: pointer;
+    color: var(--light-text);
+    flex-shrink: 0;
+}
+
+/* NoScript Message */
+.noscript-message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--error-color);
+    color: white;
+    text-align: center;
+    padding: 15px;
+    z-index: 2000;
+    box-shadow: var(--shadow);
+}
+
+/* Focus styles for accessibility */
+button:focus, input:focus, select:focus, .filter:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .todo-app {
+        padding: 20px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .filters {
+        flex-wrap: wrap;
+    }
+    
+    .task-options {
+        flex-direction: column;
+    }
+    
+    #due-date-input {
+        margin-bottom: 5px;
+    }
+    
+    .task-actions {
+        gap: 5px;
+    }
+    
+    .edit-btn, .delete-btn, .notification-btn {
+        font-size: 0.9rem;
+        padding: 3px;
+    }
+}
+
+/* Fix for iOS Safari date input */
+@supports (-webkit-touch-callout: none) {
+    #due-date-input {
+        min-height: 30px;
+    }
+}
+
+/* Add styles for the sound settings */
+.settings-section {
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+.settings-section:last-child {
+    border-bottom: none;
+}
+
+.settings-section h3 {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+}
+
+.volume-control label {
+    margin-right: 10px;
+}
+
+#sound-volume {
+    flex: 1;
+    margin-right: 10px;
+    height: 5px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--border-color);
+    border-radius: 5px;
+    outline: none;
+}
+
+#sound-volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+}
+
+#sound-volume::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    border: none;
+}
+
+#sound-preview {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#sound-preview:hover {
+    background-color: var(--secondary-color);
+}
+
+#sound-preview i {
+    font-size: 0.7rem;
+}
+
+.creator {
+    margin-top: 5px;
+    font-weight: 500;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+} 
