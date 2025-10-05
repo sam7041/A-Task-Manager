@@ -3,7 +3,7 @@
 A beautiful, fully functional to-do application built with HTML, CSS, and JavaScript.
 
 <!-- Overview image -->
-![TaskMaster Overview](images/taskmaster-overview.svg)
+![TaskMaster Overview](TaskManagerOverview.png)
 
 ## Features
 
@@ -67,9 +67,7 @@ This application works on all modern browsers:
 
 This project is open source. See the `LICENSE` file for details if present.
 
-## Preview
-
-
 ---
+
 
 Created with by Sameer Shukla
