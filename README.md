@@ -64,10 +64,8 @@ This application works on all modern browsers:
 **Note**: Browser notifications require permission from the user and may not work in all browsers or environments.
 
 ## License
-
-This project is open source. See the `LICENSE` file for details if present.
+MIT License
+Copyright (c) 2025 Sameer Shukla
 
 ---
 
-
-Created with by Sameer Shukla
