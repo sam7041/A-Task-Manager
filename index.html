@@ -4,56 +4,169 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>TaskMaster - Your Modern To-Do App</title>
+    <title>TaskMaster | Daily Flow Planner</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <meta name="description" content="TaskMaster - A beautiful, modern to-do application with notifications">
-    <meta name="theme-color" content="#6c5ce7">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta name="description" content="TaskMaster is a stylish daily planner with task reminders, focus insights, and a dedicated today view.">
+    <meta name="theme-color" content="#101726">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1><i class="fas fa-check-circle"></i> TaskMaster</h1>
-            <p>Organize your tasks, simplify your life</p>
-        </header>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
 
-        <div class="todo-app">
-            <div class="add-task">
-                <div class="task-input-container">
-                    <input type="text" id="task-input" placeholder="Add a new task...">
-                    <div class="task-options">
-                        <input type="datetime-local" id="due-date-input" title="Set due date and time">
-                        <button id="notification-settings" title="Notification settings"><i class="fas fa-bell"></i></button>
+    <main class="container">
+        <section class="hero">
+            <div class="hero-copy">
+                <div class="eyebrow">Daily command center</div>
+                <h1>TaskMaster</h1>
+                <p>Plan the day, surface what matters now, and keep momentum with a cleaner, more modern task flow.</p>
+
+                <div class="hero-meta">
+                    <div class="meta-pill">
+                        <i class="fas fa-calendar-day"></i>
+                        <span id="current-date-label">Today</span>
+                    </div>
+                    <div class="meta-pill">
+                        <i class="fas fa-bolt"></i>
+                        <span id="daily-focus-label">0 focus items</span>
                     </div>
                 </div>
-                <button id="add-button" title="Add task"><i class="fas fa-plus"></i></button>
             </div>
 
-            <div class="filters">
-                <div class="filter active" data-filter="all">All</div>
-                <div class="filter" data-filter="active">Active</div>
-                <div class="filter" data-filter="completed">Completed</div>
-                <div class="filter" data-filter="upcoming">Upcoming</div>
+            <div class="hero-stats">
+                <article class="stat-card highlight-card">
+                    <div class="stat-card-header">
+                        <span>Today's Pulse</span>
+                        <i class="fas fa-sparkles"></i>
+                    </div>
+                    <div class="stat-value" id="today-progress-value">0%</div>
+                    <p id="today-progress-copy">Nothing scheduled yet. Start with one meaningful task.</p>
+                    <div class="progress-bar">
+                        <span id="today-progress-bar"></span>
+                    </div>
+                </article>
+
+                <article class="stat-card">
+                    <span class="stat-label">Due Today</span>
+                    <strong id="today-count">0</strong>
+                    <small id="today-count-subtext">Tasks lined up for today</small>
+                </article>
+
+                <article class="stat-card">
+                    <span class="stat-label">Completed Today</span>
+                    <strong id="completed-today-count">0</strong>
+                    <small id="streak-count">0 day streak</small>
+                </article>
+
+                <article class="stat-card">
+                    <span class="stat-label">Overdue</span>
+                    <strong id="overdue-count">0</strong>
+                    <small id="overdue-subtext">Clean these up first</small>
+                </article>
+            </div>
+        </section>
+
+        <section class="todo-app">
+            <div class="planner-topbar">
+                <div>
+                    <h2>Plan Your Flow</h2>
+                    <p>Quick capture, smart filters, and a dedicated today lane.</p>
+                </div>
+                <button id="notification-settings" class="ghost-button" title="Notification settings">
+                    <i class="fas fa-bell"></i>
+                    <span>Alerts</span>
+                </button>
             </div>
 
-            <ul id="task-list">
-                <!-- Tasks will be added here dynamically -->
+            <div class="add-task">
+                <div class="task-input-container">
+                    <input type="text" id="task-input" placeholder="What needs to happen next?">
+                    <div class="task-options">
+                        <input type="datetime-local" id="due-date-input" title="Set due date and time">
+                        <div class="quick-actions">
+                            <button class="quick-action" data-quick-date="today-evening">Today 6PM</button>
+                            <button class="quick-action" data-quick-date="tomorrow-morning">Tomorrow 9AM</button>
+                            <button class="quick-action" data-quick-date="next-hour">+1 Hour</button>
+                        </div>
+                    </div>
+                </div>
+                <button id="add-button" title="Add task">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+
+            <div class="toolbar">
+                <div class="filters" role="tablist" aria-label="Task filters">
+                    <button class="filter active" data-filter="all">All</button>
+                    <button class="filter" data-filter="today">Today</button>
+                    <button class="filter" data-filter="active">Active</button>
+                    <button class="filter" data-filter="completed">Completed</button>
+                    <button class="filter" data-filter="upcoming">Upcoming</button>
+                </div>
+
+                <label class="search-wrap" for="search-input">
+                    <i class="fas fa-search"></i>
+                    <input type="search" id="search-input" placeholder="Search tasks">
+                </label>
+            </div>
+
+            <section class="focus-board">
+                <article class="focus-card">
+                    <div class="focus-card-header">
+                        <h3>Today's Focus</h3>
+                        <span id="today-summary-badge">0 queued</span>
+                    </div>
+                    <p id="today-summary-copy">Your top tasks for today will show up here.</p>
+                    <ul id="today-focus-list" class="focus-list"></ul>
+                </article>
+
+                <article class="focus-card secondary">
+                    <div class="focus-card-header">
+                        <h3>Rhythm</h3>
+                        <span>Live insight</span>
+                    </div>
+                    <p id="insight-copy">Add a due date to turn tasks into a focused daily plan.</p>
+                    <div class="insight-grid">
+                        <div>
+                            <strong id="active-count">0</strong>
+                            <span>active</span>
+                        </div>
+                        <div>
+                            <strong id="completion-rate">0%</strong>
+                            <span>done</span>
+                        </div>
+                        <div>
+                            <strong id="upcoming-count">0</strong>
+                            <span>soon</span>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <ul id="task-list" aria-live="polite">
+                <!-- Tasks render here -->
             </ul>
 
             <div class="task-stats">
                 <span id="tasks-counter">0 tasks left</span>
-                <button id="clear-completed">Clear Completed</button>
+                <div class="task-stats-actions">
+                    <input id="import-file" type="file" accept="application/json" hidden>
+                    <button id="export-data" title="Download a backup of tasks and settings">Export</button>
+                    <button id="import-data" title="Import tasks and settings from a backup">Import</button>
+                    <button id="clear-completed">Clear Completed</button>
+                </div>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
-    <!-- Notification Settings Modal -->
-    <div id="notification-modal" class="modal" role="dialog" aria-labelledby="notification-settings-title">
+    <div id="notification-modal" class="modal" role="dialog" aria-labelledby="notification-settings-title" aria-modal="true">
         <div class="modal-content">
-            <span class="close-modal" aria-label="Close">&times;</span>
+            <button class="close-modal" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
             <h2 id="notification-settings-title">Notification Settings</h2>
-            
+
             <div class="settings-section">
                 <h3>Notifications</h3>
                 <div class="notification-option">
@@ -71,7 +184,7 @@
                     </select>
                 </div>
             </div>
-            
+
             <div class="settings-section">
                 <h3>Sound</h3>
                 <div class="notification-option">
@@ -84,14 +197,14 @@
                     <button id="sound-preview" title="Preview sound"><i class="fas fa-play"></i></button>
                 </div>
             </div>
-            
+
             <button id="save-notification-settings">Save Settings</button>
         </div>
     </div>
 
     <footer>
-        <p>Drag and drop to reorder tasks • Double-click to edit</p>
-        <p class="creator">Created with ❤️ by Sameer Shukla</p>
+        <p>Drag to reorder. Double-click to edit. Use Today view to zero in on what matters.</p>
+        <p class="creator">Created with love by Sameer Shukla</p>
     </footer>
 
     <noscript>
@@ -102,4 +215,4 @@
 
     <script src="script.js"></script>
 </body>
-</html> 
+</html>
